@@ -3,7 +3,7 @@ let leftEye;
 let rightEye;
 let face;
 const monkeySvg = document.getElementById('monkeySvg');
-const link = document.querySelector("a");
+const saveLink = document.querySelector("a");
 
 monkeySvg.addEventListener("load", getMonkeyParts);
 
@@ -40,7 +40,7 @@ function hide(clickedBtn) {
 }
 
 buttons.forEach((button) => button.addEventListener("click", (e) => hide(e.target.id)));
-link.addEventListener("click", printMonkeyLink);
+saveLink.addEventListener("click", printMonkeyLink);
 
 function generateMonkeyLink() {
   let monkeyCode = document.getElementById('monkeySvg').contentDocument;
@@ -53,7 +53,11 @@ function generateMonkeyLink() {
     }
   }
   hiddenParts = hiddenParts.join();
-  let monkeyLink = window.location.origin + "?hidden=" + hiddenParts;
+  let monkeyLink;
+  if (window.location.pathname)
+  {monkeyLink = window.location.origin + window.location.pathname + "?hidden=" + hiddenParts;}
+  else
+  {monkeyLink = window.location.origin + "?hidden=" + hiddenParts;}
   return monkeyLink;
 
 }
