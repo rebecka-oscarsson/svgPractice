@@ -1,0 +1,30 @@
+body {display: flex; flex-direction: column; align-items: center;}
+.hidden {display:none}
+
+#monkeySvg {
+    width: 30vw;
+    height: auto;
+}
+
+#fur {}
+
+#face:hover {
+    filter: url(#pictureFilter)
+}
+
+#face:hover+#leftEye {
+    fill: red
+}
+
+
+
+
+
+#rightEye:hover {animation: grow 2s infinite alternate;
+}
+
+@keyframes grow {
+    to {
+        transform: scale(2,2);
+    }
+}
