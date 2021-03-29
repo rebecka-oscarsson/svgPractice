@@ -14,7 +14,7 @@ function getMonkeyParts() {
   face = monkeyCode.getElementById("face");
   leftEye = monkeyCode.querySelector("#leftEye");
   rightEye = monkeyCode.getElementById("rightEye");
-  printMonkey(monkeyParts) //funkar för bara en kroppsdel
+  printMonkey(monkeyParts)
   return monkeyCode;
 }
 
@@ -40,9 +40,9 @@ function hide(clickedBtn) {
 }
 
 buttons.forEach((button) => button.addEventListener("click", (e) => hide(e.target.id)));
-link.addEventListener("click", saveMonkey);
+link.addEventListener("click", printMonkeyLink);
 
-function saveMonkey() {
+function generateMonkeyLink() {
   let monkeyCode = document.getElementById('monkeySvg').contentDocument;
   const monkeyParts = monkeyCode.querySelectorAll("path");
   let hiddenParts = [];
@@ -52,17 +52,39 @@ function saveMonkey() {
       hiddenParts.push(monkeyParts[part].id)
     }
   }
-  hiddenParts = hiddenParts.join()
-  let monkeyLink = document.createTextNode("your personal link: " + window.location.origin + "?hidden=" + hiddenParts);
+  hiddenParts = hiddenParts.join();
+  let monkeyLink = window.location.origin + "?hidden=" + hiddenParts;
+  return monkeyLink;
+
+}
+
+function printMonkeyLink() {
+  let monkeyLink = generateMonkeyLink();
+  let label = document.createElement("label");
+  label.setAttribute("for", "link");
+  label.innerText = "your monkey is at: ";
+
   const section = document.querySelector("section");
-  section.textContent="";
-  section.appendChild(monkeyLink);
+  section.innerHTML = "";
+  let inputField = document.createElement("input");
+  label.setAttribute("id", "link");
+  inputField.value = monkeyLink;
+  section.appendChild(label)
+  section.appendChild(inputField);
+
+  //från StackOverflow 
+  inputField.addEventListener('input', () => resizeInput); // bind the "resizeInput" callback on "input" event
+  resizeInput.call(inputField); // immediately call the function}
+}
+
+function resizeInput() {
+  this.style.width = this.value.length + "ch";
 }
 
 function getMonkey() {
-  let monkeyString = new URLSearchParams(window.location.search);
-  monkeyArray = monkeyString.getAll('hidden');
-  let savedMonkey = monkeyArray.toString().split(",");
+  let monkeyString = new URLSearchParams(window.location.search); //plockar ut parametrar inkl frågetecken
+  monkeyArray = monkeyString.getAll('hidden'); //tar bort frågetecken och gör array med ett värde
+  let savedMonkey = monkeyArray.toString().split(","); //gör först till sträng sedan array med separata värden
   return savedMonkey;
 }
 

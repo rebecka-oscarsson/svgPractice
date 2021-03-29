@@ -6,25 +6,25 @@ body {display: flex; flex-direction: column; align-items: center;}
     height: auto;
 }
 
-#fur {}
-
-#face:hover {
+#fur:hover+#face {
     filter: url(#pictureFilter)
 }
 
 #face:hover+#leftEye {
-    fill: red
+    fill: red;
 }
 
+#fur:hover {stroke:black}
 
 
 
 
-#rightEye:hover {animation: grow 2s infinite alternate;
+
+/* #rightEye:hover {animation: grow 2s infinite alternate;
 }
 
 @keyframes grow {
     to {
         transform: scale(2,2);
     }
-}
+} */
