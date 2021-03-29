@@ -1,11 +1,26 @@
+/*********************************
+             variables
+*********************************/
+
 let fur;
 let leftEye;
 let rightEye;
 let face;
 const monkeySvg = document.getElementById('monkeySvg');
 const saveLink = document.querySelector("a");
+let buttons = document.querySelectorAll("button");
+
+/*********************************
+          eventListeners
+*********************************/
 
 monkeySvg.addEventListener("load", getMonkeyParts);
+buttons.forEach((button) => button.addEventListener("click", (e) => hide(e.target.id)));
+saveLink.addEventListener("click", printMonkeyLink);
+
+/*********************************
+          functions
+*********************************/
 
 function getMonkeyParts() {
   var monkeyCode = document.getElementById('monkeySvg').contentDocument;
@@ -14,11 +29,9 @@ function getMonkeyParts() {
   face = monkeyCode.getElementById("face");
   leftEye = monkeyCode.querySelector("#leftEye");
   rightEye = monkeyCode.getElementById("rightEye");
-  printMonkey(monkeyParts)
+  printMonkey(monkeyParts);
   return monkeyCode;
 }
-
-let buttons = document.querySelectorAll("button");
 
 function hide(clickedBtn) {
   switch (clickedBtn) {
@@ -39,9 +52,6 @@ function hide(clickedBtn) {
   }
 }
 
-buttons.forEach((button) => button.addEventListener("click", (e) => hide(e.target.id)));
-saveLink.addEventListener("click", printMonkeyLink);
-
 function generateMonkeyLink() {
   let monkeyCode = document.getElementById('monkeySvg').contentDocument;
   const monkeyParts = monkeyCode.querySelectorAll("path");
@@ -53,13 +63,14 @@ function generateMonkeyLink() {
     }
   }
   hiddenParts = hiddenParts.join();
-  let monkeyLink;
+  let monkeyLink;//hur göra så att det ej funkar om hiddenparts tom?
+  if (hiddenParts){
   if (window.location.pathname)
   {monkeyLink = window.location.origin + window.location.pathname + "?hidden=" + hiddenParts;}
   else
-  {monkeyLink = window.location.origin + "?hidden=" + hiddenParts;}
+  {monkeyLink = window.location.origin + "?hidden=" + hiddenParts;}}
+  else {monkeyLink = "you haven't made any changes"}
   return monkeyLink;
-
 }
 
 function printMonkeyLink() {
@@ -94,6 +105,7 @@ function getMonkey() {
 
 function printMonkey(parts) {
   let savedMonkey = getMonkey();
+  
   for (part in parts) {
     for (savedPart in savedMonkey) //det är unika id:n så loopen bör kunna bli kortare
     {
