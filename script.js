@@ -15,7 +15,7 @@ let buttons = document.querySelectorAll("button");
 *********************************/
 
 monkeySvg.addEventListener("load", getMonkeyParts);
-buttons.forEach((button) => button.addEventListener("click", (e) => hide(e.target.id)));
+
 saveLink.addEventListener("click", printMonkeyLink);
 
 /*********************************
@@ -30,6 +30,7 @@ function getMonkeyParts() {
   leftEye = monkeyCode.querySelector("#leftEye");
   rightEye = monkeyCode.getElementById("rightEye");
   printMonkey(monkeyParts);
+  buttons.forEach((button) => button.addEventListener("click", (e) => hide(e.target.id)));
   return monkeyCode;
 }
 
